@@ -12,6 +12,7 @@ const terminalScroll = document.querySelector(
 
 const timeDisplay = document.querySelector('[data-nav="time"]');
 const cloakedElements = document.querySelectorAll("[cloak]");
+const toastElements = document.querySelectorAll("[data-toast='wrapper']");
 
 const navLinks = document.querySelectorAll('[data-terminal="target"]');
 
@@ -36,6 +37,23 @@ async function displayDynamicData() {
 displayDynamicData();
 
 // ===========================================================================
+// Toasts ->
+toastElements.forEach((toast) => {
+  // Define the mouseleave function outside so it can be reused
+  const mouseLeaveFunction = function () {
+    toast.querySelector("[data-toast='message']").classList.toggle("active");
+    // Remove the mouseleave listener to clean up
+    toast.removeEventListener("mouseleave", mouseLeaveFunction);
+  };
+
+  toast.addEventListener("mouseenter", function () {
+    toast.querySelector("[data-toast='message']").classList.toggle("active");
+    // Add the mouseleave listener
+    toast.addEventListener("mouseleave", mouseLeaveFunction);
+  });
+});
+
+// ===========================================================================
 
 // Nav Links ->
 navLinks.forEach((link) => {
@@ -47,8 +65,12 @@ navLinks.forEach((link) => {
       key: "Enter",
     });
     input.dispatchEvent(event);
-    })
   });
+});
+
+function clickTargetButton(target) {
+  document.querySelector(`[data-nav='${target}']`).click();
+}
 
 // ===========================================================================
 
@@ -60,7 +82,7 @@ terminal.addEventListener("click", () => {
 });
 
 input.addEventListener("input", function () {
-  const value = input.value.trim();
+  const value = input.value.trim().toLowerCase();
   if (value in commandList) {
     input.style.color = "var(--terminal--okay)";
   } else {
@@ -70,7 +92,7 @@ input.addEventListener("input", function () {
 
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    const command = input.value.trim();
+    const command = input.value.trim().toLowerCase();
     handleCommand(command);
   }
 });
@@ -91,16 +113,32 @@ const commandList = {
   clear: () => {
     output.innerHTML = "";
   },
-  help: () => appendOutput(input.value.trim(), "Call patrick for help"),
+  help: () => appendOutput(input.value.trim(), `Need some help navigating this terminal? Here are the available commands:
+    ${"<br>".repeat(2)}
+    whoami - Learn more about me
+    <br>
+    contact - Get in touch
+    <br>
+    clear - Clear the terminal`),
   about: () =>
     appendOutput(
       input.value.trim(),
-      `My name is Patrick, and I'm a web developer.
-    I'm a big fan of JavaScript, and I'm always looking for new ways to improve my skills.${"<br>".repeat(2)}Welcome to my website`,
+      `Hey there, I'm Patrick, a passionate web and Webflow developer based in Ontario, Canada. With nearly a decade of experience in crafting immersive digital experiences, I thrive on pushing the boundaries of creativity and innovation in web development. From designing visually stunning websites to delving into the intricacies of code and JavaScript, I'm dedicated to bringing ideas to life and making meaningful contributions to the Webflow community.
+${"<br>".repeat(2)}
+Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get in touch</a> to discuss your next project or collaborate on something extraordinary together.`,
     ),
   whoami: () => {
     commandList.about();
   },
+  contact: () =>
+    appendOutput(
+      input.value.trim(),
+      `You can find me on X <a class="terminal_link" href="https://twitter.com/corsettiDev" target="_blank">@corsettiDev</a>
+    <br>
+    Connect with me on <a class="terminal_link" href="https://www.linkedin.com/in/patrick-corsetti/" target="_blank">LinkedIn</a>
+    ${"<br>".repeat(2)}
+    or send me an email at <a class="terminal_link text--hover-highlight" href="mailto:patrick@corsetti.dev?subject=Inquiry%20%7C%20corsettiDev&body=%2F%2F%20Let%20me%20know%20why%20you're%20reaching%20out!">patrick@corsetti.dev</a>`,
+    ),
 };
 
 function handleCommand(c) {
