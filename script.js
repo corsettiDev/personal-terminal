@@ -3,6 +3,8 @@
 const input = document.querySelector('[data-terminal="input"]');
 const output = document.querySelector('[data-terminal="output"]');
 let failedCommands = 0;
+let commandHistory = [];
+let commandIndex = 0;
 
 const terminal = document.querySelector('[data-terminal="ui"]');
 const terminalScroll = document.querySelector(
@@ -94,10 +96,28 @@ input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const command = input.value.trim().toLowerCase();
     handleCommand(command);
+    commandHistory.push(command);
+    commandIndex = commandHistory.length;
   } else if (e.ctrlKey && e.key === "l") {
-    handleCommand('clear');
+    handleCommand("clear");
   } else if (e.ctrlKey && e.key === "c") {
     input.value = "";
+  } else if (e.key === "ArrowUp") {
+    if (commandHistory.length > 0) {
+      input.value = commandHistory[commandIndex - 1] || "";
+      commandIndex = Math.max(commandIndex - 1, 0);
+      // Move cursor to end of input
+      setTimeout(function(){ input.selectionStart = input.selectionEnd = 10000; }, 0);
+    }
+  } else if (e.key === "ArrowDown") {
+    if (commandHistory.length > 0) {
+      if (commandIndex === 0) {
+        input.value = commandHistory[commandIndex] || "";
+      } else {
+        input.value = commandHistory[commandIndex + 1] || "";
+      }
+      commandIndex = Math.min(commandIndex + 1, commandHistory.length);
+    }
   }
 });
 
@@ -117,13 +137,17 @@ const commandList = {
   clear: () => {
     output.innerHTML = "";
   },
-  help: () => appendOutput(input.value.trim(), `Need some help navigating this terminal? Here are the available commands:
+  help: () =>
+    appendOutput(
+      input.value.trim(),
+      `Need some help navigating this terminal? Here are the available commands:
     ${"<br>".repeat(2)}
     whoami - Learn more about me
     <br>
     contact - Get in touch
     <br>
-    clear - Clear the terminal`),
+    clear - Clear the terminal`,
+    ),
   about: () =>
     appendOutput(
       input.value.trim(),
