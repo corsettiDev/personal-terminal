@@ -137,8 +137,10 @@ input.addEventListener("keydown", function (e) {
     commandIndex = commandHistory.length;
   } else if (e.ctrlKey && e.key === "l") {
     handleCommand("clear");
+    commandIndex = commandHistory.length;
   } else if (e.ctrlKey && e.key === "c") {
     input.value = "";
+    commandIndex = commandHistory.length;
   } else if (e.key === "ArrowUp") {
     if (commandHistory.length > 0) {
       input.value = commandHistory[commandIndex - 1] || "";
