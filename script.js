@@ -39,6 +39,41 @@ displayDynamicData();
 
 // ===========================================================================
 
+// Rolls ->
+const rollElements = document.querySelectorAll("[data-roll='wrapper']");
+
+// Define a single function to update event listeners based on window width
+function updateRollListeners() {
+  rollElements.forEach((roll) => {
+    const top = roll.querySelector("[data-roll='top']");
+    const bottom = roll.querySelector("[data-roll='bottom']");
+    
+    // Define the animation toggle function here to ensure it has access to updated `top` and `bottom` variables
+    function rollAnimate() {
+      top.classList.toggle("roll_out");
+      bottom.classList.toggle("roll_in");
+    }
+    
+    // Check if event listeners should be added or removed based on window width
+    if (window.innerWidth > 650) {
+      // Ensure listeners are not added multiple times
+      roll.removeEventListener("mouseenter", rollAnimate);
+      roll.removeEventListener("mouseleave", rollAnimate);
+      roll.addEventListener("mouseenter", rollAnimate);
+      roll.addEventListener("mouseleave", rollAnimate);
+    } else {
+      roll.removeEventListener("mouseenter", rollAnimate);
+      roll.removeEventListener("mouseleave", rollAnimate);
+    }
+  });
+}
+
+updateRollListeners();
+
+window.addEventListener("resize", updateRollListeners);
+
+// ===========================================================================
+
 // Toasts ->
 toastElements.forEach((toast) => {
   // Define the mouseleave function outside so it can be reused
