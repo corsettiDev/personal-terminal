@@ -224,6 +224,13 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
   hi: () => commandList.greet(),
   hello: () => commandList.greet(),
   'what is this?': () => commandList.greet(),
+  // Easter Eggs ->
+  'what is love?': () =>
+    appendOutput(
+      input.value.trim(),
+      `Baby don't hurt me. Don't hurt me. No more.`,
+    ),
+  // Games ->
 };
 
 function handleCommand(c) {
