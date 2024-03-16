@@ -94,6 +94,10 @@ input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const command = input.value.trim().toLowerCase();
     handleCommand(command);
+  } else if (e.ctrlKey && e.key === "l") {
+    handleCommand('clear');
+  } else if (e.ctrlKey && e.key === "c") {
+    input.value = "";
   }
 });
 
