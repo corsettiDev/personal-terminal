@@ -36,6 +36,23 @@ async function displayDynamicData() {
 displayDynamicData();
 
 // ===========================================================================
+// Toasts ->
+toastElements.forEach((toast) => {
+  // Define the mouseleave function outside so it can be reused
+  const mouseLeaveFunction = function () {
+    toast.querySelector("[data-toast='message']").classList.toggle("active");
+    // Remove the mouseleave listener to clean up
+    toast.removeEventListener("mouseleave", mouseLeaveFunction);
+  };
+
+  toast.addEventListener("mouseenter", function () {
+    toast.querySelector("[data-toast='message']").classList.toggle("active");
+    // Add the mouseleave listener
+    toast.addEventListener("mouseleave", mouseLeaveFunction);
+  });
+});
+
+// ===========================================================================
 
 // Toasts ->
 toastElements.forEach((toast) => {
