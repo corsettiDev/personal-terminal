@@ -83,6 +83,7 @@ terminal.addEventListener("click", () => {
   input.focus();
 });
 
+// Input ->
 input.addEventListener("input", function () {
   const value = input.value.trim().toLowerCase();
   if (value in commandList) {
@@ -92,6 +93,7 @@ input.addEventListener("input", function () {
   }
 });
 
+// Keyboard Control ->
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const command = input.value.trim().toLowerCase();
@@ -107,7 +109,9 @@ input.addEventListener("keydown", function (e) {
       input.value = commandHistory[commandIndex - 1] || "";
       commandIndex = Math.max(commandIndex - 1, 0);
       // Move cursor to end of input
-      setTimeout(function(){ input.selectionStart = input.selectionEnd = 10000; }, 0);
+      setTimeout(function () {
+        input.selectionStart = input.selectionEnd = 10000;
+      }, 0);
     }
   } else if (e.key === "ArrowDown") {
     if (commandHistory.length > 0) {
@@ -121,11 +125,15 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-function appendOutput(command, resultHTML, isError = false) {
+// Output ->
+function appendOutput(command, resultHTML, isError = false, isWarning = false) {
   let outputCommand = document.createElement("p");
   let outputResult = document.createElement("div");
   outputCommand.innerHTML = `> <span>${command}</span>`;
-  if (!isError) {
+  if (isWarning) {
+    outputCommand.querySelector("span").style.color =
+      "var(--terminal--warning)";
+  } else if (!isError) {
     outputCommand.querySelector("span").style.color = "var(--terminal--okay)";
   }
   outputResult.innerHTML = resultHTML;
@@ -133,6 +141,7 @@ function appendOutput(command, resultHTML, isError = false) {
   output.appendChild(outputResult);
 }
 
+// Commands ->
 const commandList = {
   clear: () => {
     output.innerHTML = "";
@@ -147,6 +156,8 @@ const commandList = {
     contact - Get in touch
     <br>
     clear - Clear the terminal`,
+      false,
+      true,
     ),
   about: () =>
     appendOutput(
