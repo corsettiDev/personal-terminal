@@ -199,7 +199,7 @@ const commandList = {
   about: () =>
     appendOutput(
       input.value.trim(),
-      `Hey there, I'm Patrick, a passionate web and Webflow developer based in Ontario, Canada. With nearly a decade of experience in crafting immersive digital experiences, I thrive on pushing the boundaries of creativity and innovation in web development. From designing visually stunning websites to delving into the intricacies of code and JavaScript, I'm dedicated to bringing ideas to life and making meaningful contributions to the Webflow community.
+      `I'm Patrick, a passionate web and Webflow developer based in Ontario, Canada. With nearly a decade of experience in crafting immersive digital experiences, I thrive on pushing the boundaries of creativity and innovation in web development. From designing visually stunning websites to delving into the intricacies of code and JavaScript, I'm dedicated to bringing ideas to life and making meaningful contributions to the Webflow community.
 ${"<br>".repeat(2)}
 Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get in touch</a> to discuss your next project or collaborate on something extraordinary together.`,
     ),
@@ -215,6 +215,15 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
     ${"<br>".repeat(2)}
     or send me an email at <a class="terminal_link text--hover-highlight" href="mailto:patrick@corsetti.dev?subject=Inquiry%20%7C%20corsettiDev&body=%2F%2F%20Let%20me%20know%20why%20you're%20reaching%20out!">patrick@corsetti.dev</a>`,
     ),
+  greet: () =>
+    appendOutput(
+      input.value.trim(),
+      `Hey there! This is kind of weird right? Try typing out the command 'whoami'`,
+    ),
+  hey: () => commandList.greet(),
+  hi: () => commandList.greet(),
+  hello: () => commandList.greet(),
+  'what is this?': () => commandList.greet(),
 };
 
 function handleCommand(c) {
