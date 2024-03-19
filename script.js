@@ -47,13 +47,13 @@ function updateRollListeners() {
   rollElements.forEach((roll) => {
     const top = roll.querySelector("[data-roll='top']");
     const bottom = roll.querySelector("[data-roll='bottom']");
-    
+
     // Define the animation toggle function here to ensure it has access to updated `top` and `bottom` variables
     function rollAnimate() {
       top.classList.toggle("roll_out");
       bottom.classList.toggle("roll_in");
     }
-    
+
     // Check if event listeners should be added or removed based on window width
     if (window.innerWidth > 650) {
       // Ensure listeners are not added multiple times
@@ -71,6 +71,31 @@ function updateRollListeners() {
 updateRollListeners();
 
 window.addEventListener("resize", updateRollListeners);
+
+// ===========================================================================
+
+// Audio Player ->
+
+let audioPlaying = false;
+
+function playAudio(src) {
+  if (!audioPlaying) {
+    audioPlaying = true;
+    const audio = new Audio(src);
+    audio.volume = .1;
+    audio.play();
+    audio.onended = function () {
+      audio.remove();
+      audioPlaying = false;
+    };
+    audio.onerror = function () {
+      audio.remove();
+      audioPlaying = false;
+    };
+  } else {
+    console.log("Audio is already playing");
+  }
+}
 
 // ===========================================================================
 
@@ -223,13 +248,17 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
   hey: () => commandList.greet(),
   hi: () => commandList.greet(),
   hello: () => commandList.greet(),
-  'what is this?': () => commandList.greet(),
+  "what is this?": () => commandList.greet(),
   // Easter Eggs ->
-  'what is love?': () =>
+  "what is love?": () => {
+    playAudio(
+      "https://corsetti-dev-easter-eggs.s3.us-east-2.amazonaws.com/baby-don't-hurt-me.webm",
+    );
     appendOutput(
       input.value.trim(),
       `Baby don't hurt me. Don't hurt me. No more.`,
-    ),
+    );
+  },
   // Games ->
 };
 
