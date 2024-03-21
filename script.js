@@ -224,13 +224,11 @@ const commandList = {
   help: () =>
     appendOutput(
       input.value.trim(),
-      `Need some help navigating this terminal? Here are the available commands:
+      `Need some help navigating this terminal? Here are some commands to get you started:
     ${"<br>".repeat(2)}
     whoami - Learn more about me
     <br>
-    contact - Get in touch
-    <br>
-    clear - Clear the terminal`,
+    contact - Get in touch`,
       false,
       true,
     ),
@@ -310,6 +308,55 @@ Feel free to <a class="terminal_link" terminal-nav='contact')">get in touch</a> 
       false,
     ),
   vim: () => commandList.nvim(),
+  // File System ->
+  ls: () =>
+    appendOutput(
+      input.value.trim(),
+      `Available commands:
+    ${"<br>".repeat(2)}
+    whoami - Learn more about me
+    <br>
+    contact - Get in touch
+    <br>
+    clear - Clear the terminal
+    <br>
+    man or help - Get help navigating the terminal
+    <br>
+    ls - List available commands (Accepted flags -a | --all)`,
+      false,
+      false,
+    ),
+    SwwOaeyNDr: () =>
+    appendOutput(
+      input.value.trim(),
+      `Available commands:
+    ${"<br>".repeat(2)}
+    whoami - Learn more about me
+    <br>
+    contact - Get in touch
+    <br>
+    clear - Clear the terminal
+    <br>
+    man or help - Get help navigating the terminal
+    <br>
+    <br>
+      Hidden Commands:
+    ${"<br>".repeat(2)}
+      snake - Play a classic game of Snake
+      <br>
+      nvim - The best text editor
+      <br>
+      what is love? - Play a classic tune
+      <br>
+      shutdown - Shut down the terminal
+      <br>
+      reboot - Reboot the terminal
+      `,
+      false,
+      false,
+    ),
+    "ls -a": () => commandList.SwwOaeyNDr(),
+    "ls --all": () => commandList.SwwOaeyNDr(),
   // Games ->
   snake: () => {
     appendOutput(
