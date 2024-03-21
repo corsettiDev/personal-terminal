@@ -118,6 +118,79 @@ export function initSnake() {
 
   // ===========================================================================
 
+  // Mobile Controls ->
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  canvas.addEventListener(
+    "touchstart",
+    function (e) {
+      // Prevent the browser from processing default touch events
+      e.preventDefault();
+
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    },
+    false,
+  );
+
+  canvas.addEventListener(
+    "touchend",
+    function (e) {
+      // Prevent the browser from processing default touch events
+      e.preventDefault();
+
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+
+      handleTouchMove();
+    },
+    false,
+  );
+
+  function handleTouchMove() {
+    const dx = touchEndX - touchStartX;
+    const dy = touchEndY - touchStartY;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+
+    if (absDx > absDy) {
+      // Movement was more horizontal than vertical
+      if (dx > 0) {
+        snake.dx = grid; // Swipe right
+        snake.dy = 0;
+      } else {
+        snake.dx = -grid; // Swipe left
+        snake.dy = 0;
+      }
+    } else {
+      // Movement was more vertical than horizontal
+      if (dy > 0) {
+        snake.dy = grid; // Swipe down
+        snake.dx = 0;
+      } else {
+        snake.dy = -grid; // Swipe up
+        snake.dx = 0;
+      }
+    }
+
+    // Avoid the snake immediately reversing on itself
+    if (snake.cells.length > 1) {
+      const nextX = snake.cells[0].x + snake.dx;
+      const nextY = snake.cells[0].y + snake.dy;
+      if (nextX === snake.cells[1].x && nextY === snake.cells[1].y) {
+        // If the next move would reverse the snake, ignore the swipe
+        snake.dx = snake.cells[0].x - snake.cells[1].x;
+        snake.dy = snake.cells[0].y - snake.cells[1].y;
+      }
+    }
+  }
+
+  // ===========================================================================
+
   // Grid Size ->
   function calculateGridSize(canvasWidth, canvasHeight) {
     const maxGridSize = 20; // Maximum grid size you'd like to use
