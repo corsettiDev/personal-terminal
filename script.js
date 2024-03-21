@@ -335,3 +335,23 @@ function handleCommand(c) {
   input.style.color = "var(--colors--white)";
   terminalScroll.scrollTop = terminalScroll.scrollHeight;
 }
+
+// ==========================================================================
+
+// URL Params ->
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const urlCommand = urlParams.get("command");
+
+if (urlCommand) {
+  input.value = urlCommand;
+  let event = new KeyboardEvent("keydown", {
+    key: "Enter",
+  });
+  input.dispatchEvent(event);
+
+  const myNewURL = ""; //the new URL
+  window.history.pushState("object or string", "Title", "/" + myNewURL);
+}
+
+// ==========================================================================
