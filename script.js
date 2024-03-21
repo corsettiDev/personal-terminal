@@ -136,6 +136,17 @@ function clickTargetButton(target) {
   document.querySelector(`[data-nav='${target}']`).click();
 }
 
+// Delegation: Listen for clicks on the document
+document.body.addEventListener("click", function (event) {
+  // Check if the clicked element has the class 'terminal_link'
+  if (event.target.getAttribute("terminal-nav")) {
+    // Prevent the default link behavior
+    event.preventDefault();
+    // Call the function associated with this action
+    clickTargetButton(event.target.getAttribute("terminal-nav"));
+  }
+});
+
 // ===========================================================================
 
 // Terminal ->
@@ -229,7 +240,7 @@ const commandList = {
       input.value.trim(),
       `I'm Patrick, a passionate web and Webflow developer based in Ontario, Canada. With nearly a decade of experience in crafting immersive digital experiences, I thrive on pushing the boundaries of creativity and innovation in web development. From designing visually stunning websites to delving into the intricacies of code and JavaScript, I'm dedicated to bringing ideas to life and making meaningful contributions to the Webflow community.
 ${"<br>".repeat(2)}
-Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get in touch</a> to discuss your next project or collaborate on something extraordinary together.`,
+Feel free to <a class="terminal_link" terminal-nav='contact')">get in touch</a> to discuss your next project or collaborate on something extraordinary together.`,
     ),
   whoami: () => {
     commandList.about();
@@ -290,10 +301,11 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
     }, 3000);
   },
   "sudo reboot": () => commandList.reboot(),
+  // hidden vim command
   nvim: () =>
     appendOutput(
       input.value.trim(),
-      `You're my favouorite kind of person. <a class="terminal_link" onClick="clickTargetButton('contact')">Let's work together!</a>`,
+      `You're my favouorite kind of person. <a class="terminal_link" terminal-nav="contact">Let's work together!</a>`,
       false,
       false,
     ),
