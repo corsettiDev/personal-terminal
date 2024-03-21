@@ -82,7 +82,7 @@ function playAudio(src) {
   if (!audioPlaying) {
     audioPlaying = true;
     const audio = new Audio(src);
-    audio.volume = .1;
+    audio.volume = 0.1;
     audio.play();
     audio.onended = function () {
       audio.remove();
@@ -221,6 +221,7 @@ const commandList = {
       false,
       true,
     ),
+  man: () => commandList.help(), // Alias for help
   about: () =>
     appendOutput(
       input.value.trim(),
@@ -259,6 +260,25 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
       `Baby don't hurt me. Don't hurt me. No more.`,
     );
   },
+  shutdown: () => {
+    appendOutput(
+      input.value.trim(),
+      `So long, and thanks for all the fish!${"<br>"}-Douglas Adams`,
+      false,
+      false,
+    );
+    setTimeout(() => {
+      document.querySelector(".app-wrapper").innerHTML = "";
+    }, 3000);
+  },
+  "sudo shutdown -h now": () => commandList.shutdown(),
+  reboot: () => {
+    appendOutput(input.value.trim(), `Rebooting...`, false, false);
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
+  },
+  "sudo reboot": () => commandList.reboot(),
   // Games ->
 };
 
