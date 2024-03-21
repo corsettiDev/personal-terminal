@@ -1,5 +1,7 @@
 // Page Load ->
 
+import { initSnake } from "./snake.js";
+
 const input = document.querySelector('[data-terminal="input"]');
 const output = document.querySelector('[data-terminal="output"]');
 let failedCommands = 0;
@@ -272,7 +274,13 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
       document.querySelector(".app-wrapper").innerHTML = "";
     }, 3000);
   },
-  shutdown: () => appendOutput(input.value.trim(), `You don't have permission to perform that action.`, false, false),
+  shutdown: () =>
+    appendOutput(
+      input.value.trim(),
+      `You don't have permission to perform that action.`,
+      false,
+      false,
+    ),
   "sudo shutdown -h now": () => commandList.ex3TWOmR60(),
   "sudo shutdown": () => commandList.ex3TWOmR60(),
   reboot: () => {
@@ -291,6 +299,17 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
     ),
   vim: () => commandList.nvim(),
   // Games ->
+  snake: () => {
+    appendOutput(
+      input.value.trim(),
+      `Launching Snake Game...${"<br>"}<span style="color:var(--terminal--warning)">Use the arrow keys to control the snake. Press 'ESC' to exit the game.</span>`,
+      false,
+      false,
+    );
+    setTimeout(() => {
+      initSnake();
+    }, 3000);
+  },
 };
 
 function handleCommand(c) {
