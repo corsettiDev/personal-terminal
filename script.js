@@ -260,7 +260,8 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
       `Baby don't hurt me. Don't hurt me. No more.`,
     );
   },
-  shutdown: () => {
+  // hidden shutdown command
+  ex3TWOmR60: () => {
     appendOutput(
       input.value.trim(),
       `So long, and thanks for all the fish!${"<br>"}-Douglas Adams`,
@@ -271,7 +272,9 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
       document.querySelector(".app-wrapper").innerHTML = "";
     }, 3000);
   },
-  "sudo shutdown -h now": () => commandList.shutdown(),
+  shutdown: () => appendOutput(input.value.trim(), `You don't have permission to perform that action.`, false, false),
+  "sudo shutdown -h now": () => commandList.ex3TWOmR60(),
+  "sudo shutdown": () => commandList.ex3TWOmR60(),
   reboot: () => {
     appendOutput(input.value.trim(), `Rebooting...`, false, false);
     setTimeout(() => {
@@ -279,6 +282,14 @@ Feel free to <a class="terminal_link" onClick="clickTargetButton('contact')">get
     }, 3000);
   },
   "sudo reboot": () => commandList.reboot(),
+  nvim: () =>
+    appendOutput(
+      input.value.trim(),
+      `You're my favouorite kind of person. <a class="terminal_link" onClick="clickTargetButton('contact')">Let's work together!</a>`,
+      false,
+      false,
+    ),
+  vim: () => commandList.nvim(),
   // Games ->
 };
 
