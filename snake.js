@@ -8,6 +8,7 @@ export function initSnake() {
   const canvas = document.querySelector('[data-terminal="game-canvas"]');
   const context = canvas.getContext("2d");
   canvas.style.opacity = 1;
+  canvas.style.pointerEvents = "auto";
 
   let grid;
   grid = calculateGridSize(canvas.width, canvas.height);
@@ -98,6 +99,7 @@ export function initSnake() {
       cancelAnimationFrame(animationFrameId);
       // Optional: Display a game over screen or cleanup
       canvas.style.opacity = 0;
+      canvas.style.pointerEvents = "none";
       input.focus();
       return;
     }
@@ -245,6 +247,7 @@ export function initSnake() {
       if (e.key === "Escape") {
         // Optional: Display a game over screen or cleanup
         canvas.style.opacity = 0;
+        canvas.style.pointerEvents = "none";
         input.focus();
         return;
       }
