@@ -390,7 +390,7 @@ function handleCommand(c) {
   }
 
   // Reset input and adjust terminal scroll
-  ghost = false;
+  // ghost = false;
   input.value = "";
   input.style.color = "var(--colors--white)";
   terminalScroll.scrollTop = terminalScroll.scrollHeight;
