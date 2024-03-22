@@ -418,17 +418,17 @@ if (urlCommand) {
 
 // Ghost in the Machine ->
 
-let ghost = true;
-const ghostListener = function () {
-  ghost = false;
-  input.removeEventListener("input", ghostListener);
-};
-input.addEventListener("input", ghostListener);
+// let ghost = true;
+// const ghostListener = function () {
+//   ghost = false;
+//   input.removeEventListener("input", ghostListener);
+// };
+// input.addEventListener("input", ghostListener);
 
-setTimeout(function () {
-  if (ghost) {
-    input.value = "who makes their personal website this difficult to use?";
-    handleCommand("help");
-  }
-  input.removeEventListener("input", ghostListener);
-}, 5000);
+// setTimeout(function () {
+//   if (ghost) {
+//     input.value = "who makes their personal website this difficult to use?";
+//     handleCommand("help");
+//   }
+//   input.removeEventListener("input", ghostListener);
+// }, 5000);
