@@ -326,7 +326,7 @@ Feel free to <a class="terminal_link" terminal-nav='contact')">get in touch</a> 
       false,
       false,
     ),
-    SwwOaeyNDr: () =>
+  SwwOaeyNDr: () =>
     appendOutput(
       input.value.trim(),
       `Available commands:
@@ -355,8 +355,8 @@ Feel free to <a class="terminal_link" terminal-nav='contact')">get in touch</a> 
       false,
       false,
     ),
-    "ls -a": () => commandList.SwwOaeyNDr(),
-    "ls --all": () => commandList.SwwOaeyNDr(),
+  "ls -a": () => commandList.SwwOaeyNDr(),
+  "ls --all": () => commandList.SwwOaeyNDr(),
   // Games ->
   snake: () => {
     appendOutput(
@@ -390,6 +390,7 @@ function handleCommand(c) {
   }
 
   // Reset input and adjust terminal scroll
+  ghost = false;
   input.value = "";
   input.style.color = "var(--colors--white)";
   terminalScroll.scrollTop = terminalScroll.scrollHeight;
@@ -414,3 +415,20 @@ if (urlCommand) {
 }
 
 // ==========================================================================
+
+// Ghost in the Machine ->
+
+let ghost = true;
+const ghostListener = function () {
+  ghost = false;
+  input.removeEventListener("input", ghostListener);
+};
+input.addEventListener("input", ghostListener);
+
+setTimeout(function () {
+  if (ghost) {
+    input.value = "who makes their personal website this difficult to use?";
+    handleCommand("help");
+  }
+  input.removeEventListener("input", ghostListener);
+}, 5000);
